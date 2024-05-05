@@ -145,7 +145,7 @@ const start = async () => {
     while(true) {
         for (const acc of accs) {
             await post(acc).catch(e => console.log(e))
-            await sleep(15,20)
+            await sleep(8,15)
         }
     }
 }
