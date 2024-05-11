@@ -5,6 +5,7 @@ import { getJPG } from './utils/get-jpg';
 import path from 'path'
 import chalk from 'chalk';
 import {SocksProxyAgent} from 'socks-proxy-agent';
+import { v4 as uuidv4 } from 'uuid';
 
 interface TokenData {
     refresh_token: string;
@@ -96,7 +97,7 @@ export async function post(acc:string) {
     const path_ = await getJPG()
     const avatarFileContent = await fs.promises.readFile(path_);
     formData.append('file', avatarFileContent, {
-        filename: path.basename(path_),
+        filename: `${uuidv4()}.jpg`,
         contentType: 'image/jpeg',
     });
     const { proxy } = await getAccData(acc)
@@ -129,13 +130,12 @@ export async function post(acc:string) {
     axios_.defaults.headers.common['X-Privy-Token'] =  await refreshToken(axios_,acc)
 
     const url = '/ticker/0x5c375b8eb20f9414cb3ff47a1bf21bc2062282f96c5a02f182f0c5aecc22cc02/post';
-    fs.promises.unlink(path_)
     await axios_.post(url, formData, {
         headers: {
         ...formData.getHeaders()
     },
-    });
-    log(chalk.blue(acc + ":"), "posted meme")
+    }).then(() => log(chalk.blue(acc + ":"), "posted meme")).catch(() => fs.promises.unlink(path_))
+    
     await likePosts(axios_, acc)
     await spin(axios_,acc)
     await getPoints(axios_, acc)
