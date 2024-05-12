@@ -101,8 +101,6 @@ export async function post(acc:string) {
         contentType: 'image/jpeg',
     });
     const { proxy } = await getAccData(acc)
-    let httpsAgent =  new SocksProxyAgent(`socks5://${proxy}`)
-    let httpAgent = httpsAgent
 
     const axios_ = axios.create({
         baseURL: 'https://api.meme.fun',
@@ -120,8 +118,8 @@ export async function post(acc:string) {
             "Sec-Fetch-Site": "same-site",
         },
         timeout: 5000,
-        httpAgent: proxy ? httpAgent : undefined,
-        httpsAgent: proxy ? httpAgent : undefined
+        httpAgent: proxy ? new SocksProxyAgent(`socks5://${proxy}`) : undefined,
+        httpsAgent: proxy ? new SocksProxyAgent(`socks5://${proxy}`) : undefined
     }
         
     )
