@@ -134,7 +134,10 @@ export async function post(acc:string) {
         headers: {
         ...formData.getHeaders()
     },
-    }).then(() => log(chalk.blue(acc + ":"), "posted meme")).catch(() => fs.promises.unlink(path_))
+    }).then(() => log(chalk.blue(acc + ":"), "posted meme")).catch((e) => {
+        console.log(e)
+        fs.promises.unlink(path_)
+    })
     
     await likePosts(axios_, acc)
     await spin(axios_,acc)
