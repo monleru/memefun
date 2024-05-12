@@ -120,8 +120,8 @@ export async function post(acc:string) {
             "Sec-Fetch-Site": "same-site",
         },
         timeout: 5000,
-        httpAgent,
-        httpsAgent
+        httpAgent: proxy ? httpAgent : undefined,
+        httpsAgent: proxy ? httpAgent : undefined
     }
         
     )
