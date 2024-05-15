@@ -7,7 +7,7 @@ async function addNoiseToImage(path) {
     const image = await Jimp.read(path);
 
     image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y, idx) {
-      const random = Math.random() * 0.001; 
+      const random = Math.random() * 0.01; 
       this.bitmap.data[idx] += random * 255; 
       this.bitmap.data[idx + 1] += random * 255;
       this.bitmap.data[idx + 2] += random * 255; 
@@ -21,7 +21,7 @@ async function addNoiseToImage(path) {
     }
     await image.writeAsync(path);
   } catch (error) {
-    console.error('Ошибка:', error);
+    console.error('Error:', error);
   }
 }
 
