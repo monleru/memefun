@@ -2,23 +2,24 @@ import fs from "fs";
 import path from "path";
 import Jimp from 'jimp'
 
+function randomInteger(min = 1, max = 2) {
+  let rand = Math.floor(min + Math.random() * (max + 1 - min))
+  return randomInteger() === 1 ? rand : rand * -1
+}
+
 async function addNoiseToImage(path) {
   try {
     const image = await Jimp.read(path);
 
     image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y, idx) {
-      const random = Math.random() * 0.003; 
+      const random = Math.random() * 0.001; 
       this.bitmap.data[idx] += random * 255; 
       this.bitmap.data[idx + 1] += random * 255;
       this.bitmap.data[idx + 2] += random * 255; 
     });
 
-    if (image.getWidth() < 250) {
-      image.resize(250, image.getHeight())
-    }
-    if (image.getHeight() < 250) {
-      image.resize(image.getWidth(), 250)
-    }
+    image.resize(image.getWidth() +  randomInteger(), image.getHeight()  + randomInteger())
+
     await image.writeAsync(path);
   } catch (error) {
     console.error('Error:', error);
