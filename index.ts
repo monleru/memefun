@@ -118,8 +118,8 @@ export async function post(acc:string) {
             "Sec-Fetch-Site": "same-site",
         },
         timeout: 5000,
-        httpAgent: proxy ? new SocksProxyAgent(`socks5://${proxy}`) : undefined,
-        httpsAgent: proxy ? new SocksProxyAgent(`socks5://${proxy}`) : undefined
+        // httpAgent: proxy ? new SocksProxyAgent(`socks5://${proxy}`) : undefined,
+        // httpsAgent: proxy ? new SocksProxyAgent(`socks5://${proxy}`) : undefined
     }
         
     )

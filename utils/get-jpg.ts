@@ -4,7 +4,7 @@ import Jimp from 'jimp'
 
 function randomInteger(min = 1, max = 2) {
   let rand = Math.floor(min + Math.random() * (max + 1 - min))
-  return randomInteger() === 1 ? rand : rand * -1
+  return rand
 }
 
 async function addNoiseToImage(path) {
@@ -25,6 +25,8 @@ async function addNoiseToImage(path) {
     console.error('Error:', error);
   }
 }
+
+addNoiseToImage('./memes/Screenshot 2024-05-17 at 11.02.36 AM.png')
 
 function getRandomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
